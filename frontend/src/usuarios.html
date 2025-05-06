@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Usuarios</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="bg-dark text-white py-3">
+      <div class="container position-relative">
+        <h1 class="text-center">Gestión de Usuarios</h1>
+        
+        <div class="position-absolute top-0 end-0 mt-2 me-3">
+          <a href="index.html" class="btn btn-secondary">Cerrar</a>
+        </div>
+      </div>
+    </header>
+    
+    <div class="container mt-5">
+      <!-- Formulario de registro de nuevo usuario -->
+      <div class="row justify-content-md-center mb-5">
+        <div class="col-md-4 mb-5">
+          <h3 class="text-center">Registrar Usuario</h3>
+          <form id="form-nuevo-usuario">
+            <!-- Campo Usuario -->
+            <div class="mb-3">
+              <label for="usuario" class="form-label">Usuario:</label>
+              <input type="text" id="usuario" name="usuario" class="form-control" required />
+            </div>
+
+            <!-- Campo Contraseña -->
+            <div class="mb-3">
+              <label for="contraseña" class="form-label">Contraseña:</label>
+              <input type="password" id="contraseña" name="contraseña" class="form-control" required />
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Referencia al archivo JavaScript -->
+    <script src="script_usuarios.js"></script>
+  </body>
+</html>

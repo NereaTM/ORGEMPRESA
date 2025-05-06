@@ -1,0 +1,24 @@
+# Node modules
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Archivos de configuración local
+.DS_Store
+
+# Docker y CI
+Dockerfile
+docker-compose*.yaml
+
+# Git
+.git
+.gitignore
+
+# Otros
+# Docs
+*.md
+README.md
+
+# Ignorar configuración local en Docker
+**/config.local.yaml

@@ -1,0 +1,13 @@
+server:
+  port: 3000
+
+jwt:
+  secret: claveSuperSecreta
+  expiresIn: 8h
+
+db:
+  host: db
+  port: 3306
+  user: orgempresa_user
+  password: orgempresa_pass
+  database: orgempresa

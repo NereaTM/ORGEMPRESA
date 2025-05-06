@@ -1,0 +1,33 @@
+name: SonarCloud Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: bajar codigo
+        uses: actions/checkout@v3
+
+      - name: isntalar nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: instalar dependencias
+        run: npm ci
+
+      - name: escan SonarCloud
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
+        with:
+          args: >
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.organization=nereatm
+            -Dsonar.projectKey=NereaTM_ORGEMPRESA
+            -Dsonar.sources=.
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}

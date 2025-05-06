@@ -1,0 +1,13 @@
+server:
+  port: 3000
+
+jwt:
+  secret: claveSuperSecreta
+  expiresIn: 8h
+
+db:
+  host: localhost
+  port: 3306
+  user: root
+  password: nerea
+  database: orgempresa

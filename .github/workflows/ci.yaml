@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: mariadb:11
+        env:
+          MYSQL_ROOT_PASSWORD: nerea
+          MYSQL_DATABASE: orgempresa
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "echo OK"
+          --health-interval=5s
+          --health-timeout=2s
+          --health-retries=1
+
+    steps:
+      - name: bajar codigo
+        uses: actions/checkout@v3
+
+      - name: instalar node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: instalar dependencias
+        run: npm ci
+
+      - name: esperar a que levante mariadb
+        run: npx wait-on tcp:3306
+
+      - name: instalar cliente sql
+        # necesario para poder ejecutar el script para meter datos
+        run: sudo apt-get update && sudo apt-get install -y mysql-client
+
+      - name: inicializar base de datos
+        # cargamos todas las tablas y datos
+        run: mysql -h 127.0.0.1 -P 3306 -u root -pnerea orgempresa < db/script.sql
+
+      - name: ejecutar test de itegracion y unitarios
+        run: npm test
+
+      - name: docker backend
+        run: |
+          docker build \
+            -t orgempresa-backend:${{ github.sha }} \
+            -f backend/Dockerfile \
+            .
+
+      - name: docker frontend
+        run: |
+          docker build \
+            -t orgempresa-frontend:${{ github.sha }} \
+            -f frontend/Dockerfile \
+            .

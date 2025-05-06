@@ -1,0 +1,65 @@
+version: '3.8'
+name: OrgEmpresa
+
+services:
+
+  db:
+    image: mariadb:11
+    container_name: orgempresa_db
+    restart: always
+    env_file:
+      - ./.env.docker
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../db/script.sql:/docker-entrypoint-initdb.d/script.sql
+      - mariadb_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    container_name: orgempresa_backend
+    restart: always
+
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      
+  frontend:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    container_name: orgempresa_frontend
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - backend
+
+  prometheus: # http://prometheus:9090
+    image: prom/prometheus:latest
+    container_name: orgempresa_prometheus
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - backend
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: orgempresa_grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  mariadb_data:
+  grafana_data:
