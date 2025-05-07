@@ -89,7 +89,7 @@ ORGEMPRESA/
     ```
 
 ## Para el uso del Makefile
-- Usar linux o instalar make con chocolate
+- Usar linux o instalar make con chocolatey
 
 
 
