@@ -18,7 +18,6 @@ docker-compose*.yaml
 # Otros
 # Docs
 *.md
-README.md
 
 # Ignorar configuración local en Docker
 **/config.local.yaml
